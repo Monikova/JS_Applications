@@ -4,15 +4,16 @@
 
 import {html, render} from "./node_modules/lit-html/lit-html.js"
 
-const inputElem = document.getElementById("towns");
-const loadBtnElem = document.getElementById("btnLoadTowns");
-loadBtnElem.addEventListener('click', onLoad);
+const formElem = document.querySelector("form");
+formElem.addEventListener("submit", onSubmit);
 const rootElem = document.getElementById("root");
 
-function onLoad(event) {
+function onSubmit(event) {
     event.preventDefault();
 
-    const townsAsArr = inputElem.value.split(", ");
+    const formData = new FormData(event.target);
+    const {towns} = Object.fromEntries(formData);
+    const townsAsArr = towns.split(", ");
     const townsUl = html `
       <ul>
         ${townsAsArr.map(t => html `<li>${t}</li>`)}
