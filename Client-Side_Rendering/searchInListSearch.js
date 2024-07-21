@@ -13,20 +13,21 @@ function search(event) {
    event.preventDefault();
    
    const inputText = inputField.value;
-
+   
    loadList(towns, inputText);
-
-   let matches = loadList(towns, inputText);
-   resultDivElem.textContent = `${matches} matches found`;
+   showResult(inputText);
 }
 
 function loadList(towns, inputText) {
-   let matches = 0;
    const townsTempl = html `
       <ul>
-         ${towns.map(t => html `<li class=${t.includes(inputText) ? "active" && matches++ : ""}>${t}</li>`)}
+         ${towns.map(t => html `<li class=${t.includes(inputText) ? "active" : ""}>${t}</li>`)}
       </ul>
    `
    render(townsTempl, townsDivElem);
-   return matches;
+}
+
+function showResult(inputText) {
+   let matches = towns.filter(t => t.includes(inputText)).length;
+   resultDivElem.textContent = `${matches} matches found`;
 }
